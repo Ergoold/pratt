@@ -1,4 +1,5 @@
 ## 0.0.3
+
 - Added flattening of `+` and `*`
 - Deprecated old `eval` method
 
