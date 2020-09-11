@@ -1,0 +1,10 @@
+name: pratt
+description: A simple pratt parser.
+version: 0.0.2
+# homepage: https://www.example.com
+
+environment:
+  sdk: '>=2.8.1 <3.0.0'
+
+dev_dependencies:
+  pedantic: ^1.9.0
