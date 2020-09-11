@@ -11,26 +11,26 @@ var operators = {
 };
 
 class BindingPower {
-  final num preBindingPower;
-  final num postBindingPower;
-  final num leftBindingPower;
-  final num rightBindingPower;
+  final num preBP;
+  final num postBP;
+  final num leftBP;
+  final num rightBP;
 
-  BindingPower._full(this.preBindingPower, this.postBindingPower,
-      this.leftBindingPower, this.rightBindingPower);
+  BindingPower._full(this.preBP, this.postBP,
+      this.leftBP, this.rightBP);
 
-  BindingPower._infix(this.leftBindingPower, this.rightBindingPower)
-      : preBindingPower = null,
-        postBindingPower = null;
+  BindingPower._infix(this.leftBP, this.rightBP)
+      : preBP = null,
+        postBP = null;
 
-  BindingPower._postfix(this.postBindingPower)
-      : preBindingPower = null,
-        leftBindingPower = null,
-        rightBindingPower = null;
+  BindingPower._postfix(this.postBP)
+      : preBP = null,
+        leftBP = null,
+        rightBP = null;
 
   BindingPower._paren()
-      : preBindingPower = null,
-        postBindingPower = null,
-        leftBindingPower = null,
-        rightBindingPower = null;
+      : preBP = null,
+        postBP = null,
+        leftBP = null,
+        rightBP = null;
 }
