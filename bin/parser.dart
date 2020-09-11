@@ -22,8 +22,7 @@ Tree expr(Iterator<Token> tokens, num mbp) {
     } else {
       num pbp;
       if ((pbp = operators[(lhs.root as Operator).value].preBindingPower) != null) {
-        var rhs = expr(tokens, pbp);
-        lhs.children.add(rhs);
+        lhs.children.add(expr(tokens, pbp));
       } else {
         throw 'Unexpected ${lhs.root}; Expected atom or unary operator';
       }
@@ -45,8 +44,7 @@ Tree expr(Iterator<Token> tokens, num mbp) {
         (rbp = operators[(root as Operator).value].rightBindingPower) != null) {
       if (lbp < mbp) break;
       tokens.moveNext();
-      var rhs = expr(tokens, rbp);
-      lhs = Tree(root, [lhs, rhs]);
+      lhs = Tree(root, [lhs, expr(tokens, rbp)]);
       continue;
     }
     break;
