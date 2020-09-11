@@ -1,16 +1,21 @@
-class Token {
+abstract class Token {}
+
+class Operator extends Token {
   final String value;
-  final Type type;
 
-  Token.op(this.value) : type = Type.op;
-  Token.atom(this.value) : type = Type.atom;
-
-  @override
-  String toString() {
-    return '$value';
-  }
+  Operator(this.value);
 }
 
-enum Type {
-  op, atom
+class Atom extends Token {}
+
+class Variable extends Atom {
+  final String name;
+
+  Variable(this.name);
+}
+
+class Number extends Atom {
+  final num value;
+
+  Number(this.value);
 }
