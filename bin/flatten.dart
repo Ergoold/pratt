@@ -8,7 +8,7 @@ Tree flatten(Tree tree) {
     case '*':
       if (tree.children.length == 1) return tree;
       for (var i = 0; i < tree.children.length; i++) {
-        if (tree is! Operator) break;
+        if (tree.children[0].root is! Operator) break;
         if ((tree.children[0].root as Operator).value == (tree.root as Operator).value) {
           var children = tree.children[0].children;
           tree.children.removeAt(0);
@@ -16,6 +16,9 @@ Tree flatten(Tree tree) {
         }
       }
       break;
+  }
+  for (var child in tree.children) {
+    flatten(child);
   }
   return tree;
 }
