@@ -5,9 +5,9 @@ import 'token.dart';
 Iterable<Token> lex() sync* {
   for (var char in read()) {
     if (operators.keys.contains(char)) {
-      yield Token.op(char);
+      yield Operator(char);
     } else if (isDigit(char)) {
-      yield Token.atom(lexAtom(char));
+      yield Number(lexAtom(char));
     } else if (char == '\n') {
       break;
     } else if (!whitespace.contains(char)) {
@@ -16,17 +16,18 @@ Iterable<Token> lex() sync* {
   }
 }
 
-String lexAtom(String prefix) {
-  var sb = StringBuffer(prefix);
+num lexAtom(String prefix) {
+  num res;
   for (var char in read()) {
     if (isDigit(char)) {
-      sb.write(char);
+      res *= 10;
+      res += char.codeUnitAt(0) - 0x30;
     } else {
       putback(char);
       break;
     }
   }
-  return sb.toString();
+  return res;
 }
 
 bool isDigit(String s) => (s.codeUnitAt(0) ^ 0x30) <= 9;
