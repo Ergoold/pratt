@@ -12,16 +12,16 @@ Tree parse() {
 Tree expr(Iterator<Token> tokens, num mbp) {
   var lhs = Tree(tokens.current, []);
   tokens.moveNext();
-  if (lhs.root.type == Type.op) {
-    if (lhs.root.value == '(') {
+  if (lhs.root is Operator) {
+    if ((lhs.root as Operator).value == '(') {
       lhs = expr(tokens, 0);
-      if (tokens.current.value != ')') {
+      if ((tokens.current as Operator).value != ')') {
         throw 'Unexpected ${tokens.current}; Expected )';
       }
       tokens.moveNext();
     } else {
       num pbp;
-      if ((pbp = operators[lhs.root.value].preBindingPower) != null) {
+      if ((pbp = operators[(lhs.root as Operator).value].preBindingPower) != null) {
         var rhs = expr(tokens, pbp);
         lhs.children.add(rhs);
       } else {
@@ -32,17 +32,17 @@ Tree expr(Iterator<Token> tokens, num mbp) {
   while (true) {
     if (tokens.current == null) break;
     var root = tokens.current;
-    if (root.type != Type.op) throw 'Unexpected ${root}; Expected op';
+    if (root is! Operator) throw 'Unexpected ${root}; Expected op';
     num pbp;
-    if ((pbp = operators[root.value].postBindingPower) != null) {
+    if ((pbp = operators[(root as Operator).value].postBindingPower) != null) {
       if (pbp < mbp) break;
       tokens.moveNext();
       lhs = Tree(root, [lhs]);
       continue;
     }
     num lbp, rbp;
-    if ((lbp = operators[root.value].leftBindingPower) != null &&
-        (rbp = operators[root.value].rightBindingPower) != null) {
+    if ((lbp = operators[(root as Operator).value].leftBindingPower) != null &&
+        (rbp = operators[(root as Operator).value].rightBindingPower) != null) {
       if (lbp < mbp) break;
       tokens.moveNext();
       var rhs = expr(tokens, rbp);
